@@ -8,7 +8,7 @@
 import {
   defineJQueryPlugin,
   getElement,
-  getSelectorFromElement,
+  getSelector,
   typeCheckConfig
 } from './util/index'
 import EventHandler from './dom/event-handler'
@@ -112,8 +112,9 @@ class ScrollSpy extends BaseComponent {
     const targets = SelectorEngine.find(SELECTOR_LINK_ITEMS, this._config.target)
 
     targets.map(element => {
-      const targetSelector = getSelectorFromElement(element)
-      const target = targetSelector ? SelectorEngine.findOne(targetSelector) : null
+      const targetSelector = getSelector(element)  // "#..."
+      const targetId = targetSelector ? targetSelector.substring(1) : null
+      const target = targetId ? document.getElementById(targetId) : null
 
       if (target) {
         const targetBCR = target.getBoundingClientRect()
